@@ -1,0 +1,38 @@
+function successfulPairs(spells: number[], potions: number[], success: number): number[] {
+    const ascdPotions: number[] = potions.sort((a,b) => a - b);
+    const result: number[] = [];
+
+    //console.log(ascdPotions)
+
+    for (let spell of spells) {
+        let low: number = 0;
+        let high: number = potions.length - 1;
+        let mid: number = 0;
+
+         if (potions[0] * spell >= success) {
+            result.push(potions.length);
+            continue;
+        }
+
+        if (potions[potions.length - 1]*spell < success) {
+            result.push(0);
+            continue;
+        }
+
+        while (high >= low) {
+            mid = low + Math.floor((high - low) / 2);
+            if (potions[mid] * spell >= success && potions[mid-1] * spell < success) {
+                result.push(potions.length - mid);
+                break;
+            }
+
+            if (potions[mid] * spell >= success) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+    }
+
+    return result
+};

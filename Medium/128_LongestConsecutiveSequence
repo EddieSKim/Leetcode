@@ -1,0 +1,22 @@
+function longestConsecutive(nums: number[]): number {
+    const sortedUniqueArray = [...new Set(nums.sort((a, b) => a - b))];
+    let prevNum = null;
+    let index = 1;
+    let longestStreak = 0;
+
+    console.log(sortedUniqueArray)
+
+    for (const num of sortedUniqueArray) {
+        if (prevNum !== null && prevNum + 1 === num) {
+            prevNum = num;
+            index++;
+        } else {
+            index = 1;
+            prevNum = num;
+        }
+
+        longestStreak = longestStreak < index ? index : longestStreak;
+    }
+
+    return longestStreak;;
+};

@@ -1,0 +1,24 @@
+class Solution {
+    public int reverse(int x) {
+        boolean negative = false;
+        if(x < 0){
+            negative = true;
+            x *= -1;
+        } 
+        int answer = 0;
+        int prev = 0;
+        while(x != 0) {
+            int lastDigit = x %  10;
+            answer = (answer *  10) + lastDigit;
+            
+            if ((answer - lastDigit)/10 != prev)
+            {
+                return 0;
+            }
+
+            prev = answer;
+            x /=  10;
+        }
+        return negative ? answer *= -1 : answer;
+    }
+}

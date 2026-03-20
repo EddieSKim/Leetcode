@@ -1,0 +1,42 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function mergeInBetween(list1: ListNode | null, a: number, b: number, list2: ListNode | null): ListNode | null {
+    let one = list1;
+    let oneIter = list1.next;
+    let twoIter = list2;
+    let oneSet = false;
+    let index = 1;
+
+    while (twoIter.next) {
+        twoIter = twoIter.next;
+    }
+
+    while (oneIter.next) {
+        if (index === a) {
+            one.next = list2;
+            oneSet = true;
+        }
+        if (index === b) {
+            twoIter.next = oneIter.next;
+        }
+
+        oneIter = oneIter.next;
+        index++;
+        if (!oneSet) {
+            one = one.next;
+        }
+
+    }
+
+    return list1;
+};

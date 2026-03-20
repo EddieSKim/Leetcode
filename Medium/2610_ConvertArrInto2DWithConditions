@@ -1,0 +1,21 @@
+function findMatrix(nums: number[]): number[][] {
+    const numsMap: Map<number, number> = nums.reduce((acc, num) => {
+        acc.set(num, (acc.get(num) || 0) + 1);
+        return acc;
+    }, new Map())
+    
+    const result= [];
+    for (let [key, value] of numsMap) {
+
+        for (let i = 0 ; i < value; i++) {
+            if (result[i] === undefined) {
+                result.push([]);
+                result[i].push(key);
+            } else {
+                result[i].push(key);
+            }
+        }
+    }
+
+    return result;
+};

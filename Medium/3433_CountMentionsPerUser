@@ -1,0 +1,53 @@
+function countMentions(numberOfUsers: number, events: string[][]): number[] {
+    const onlineUsers: Set<number> = new Set();
+    const offlineUsers: Map<number, number> = new Map();
+    const sortedEvents: string[][] = events.sort((a, b) => 
+        {
+            if (a[0] === "OFFLINE" && b[0] !== "OFFLINE") return -1;
+            if (a[0] !== "OFFLINE" && b[0] === "OFFLINE") return 1;
+        });
+    sortedEvents.sort((a, b) => Number(a[1]) - Number(b[1]));
+    const result: number[] = new Array(numberOfUsers).fill(0);
+
+    for (let i = 0; i < numberOfUsers; i++) {
+        onlineUsers.add(i);
+    }
+
+    for (const event of sortedEvents) {
+        const currentTime = Number(event[1]);
+        if (offlineUsers.size > 0) {
+            for (let [key, timeStamp] of offlineUsers) {
+                if (timeStamp+60 <= currentTime) {
+                    offlineUsers.delete(key);
+                    onlineUsers.add(key);
+                }
+            }
+        }
+
+        if (event[0] === "MESSAGE") {
+            if (event[2] === "HERE") {
+                for (const online of onlineUsers) {
+                    result[online] = result[online]+1;
+                }
+            } else if (event[2] === "ALL" ) {
+                for (let i = 0; i < result.length; i++) {
+                    result[i] = result[i]+1;
+                }
+            } else {
+                const ids = event[2].split(" ");
+                for (let i = 0; i < ids.length; i++) {
+                    const userId = Number(ids[i].split("id")[1]);
+                    result[userId] = result[userId]+1;
+                }
+            }
+        }
+
+        if (event[0] === "OFFLINE") {
+            const user = Number(event[2]);
+            onlineUsers.delete(user);
+            offlineUsers.set(user, currentTime);
+        }
+    }
+
+    return result;
+};

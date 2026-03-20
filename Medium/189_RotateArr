@@ -1,0 +1,11 @@
+/**
+ Do not return anything, modify nums in-place instead.
+ */
+function rotate(nums: number[], k: number): void {
+    const rotateValue = k % nums.length;
+
+    const rotateArr = nums.slice(nums.length - rotateValue, nums.length);
+    const pushArr = nums.slice(0,nums.length - rotateValue );
+
+    Object.assign(nums,[...rotateArr, ...pushArr]);    
+};

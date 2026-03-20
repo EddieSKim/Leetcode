@@ -1,0 +1,55 @@
+function countCoveredBuildings(n: number, buildings: number[][]): number {
+    if (n < 3 || buildings.length < 5) {
+        return 0;
+    }
+    const minXInCol = new Map();
+    const maxXInCol = new Map();
+    const minYInRow = new Map();
+    const maxYInRow = new Map(); 
+    let result = 0;
+
+    for (let i = 0; i < buildings.length; i++) {
+        const xVal = buildings[i][0];
+        const yVal = buildings[i][1];
+
+        if (minXInCol.has(yVal) && minXInCol.get(yVal) > xVal) {
+            minXInCol.set(yVal, xVal);
+        } else if (!minXInCol.has(yVal)) {
+            minXInCol.set(yVal, xVal);
+        }
+
+        if (maxXInCol.has(yVal) && maxXInCol.get(yVal) < xVal) {
+            maxXInCol.set(yVal, xVal);
+        } else if (!maxXInCol.has(yVal)) {
+            maxXInCol.set(yVal, xVal);
+        }
+
+        if (minYInRow.has(xVal) && minYInRow.get(xVal) > yVal) {
+            minYInRow.set(xVal, yVal);
+        } else if (!minYInRow.has(xVal)) {
+            minYInRow.set(xVal, yVal);
+        }
+
+        if (maxYInRow.has(xVal) && maxYInRow.get(xVal) < yVal) {
+            maxYInRow.set(xVal, yVal);
+        } else if (!maxYInRow.has(xVal)) {
+            maxYInRow.set(xVal, yVal);
+        }
+    }
+
+    for (let i = 0; i < buildings.length; i++) {
+        const xVal = buildings[i][0];
+        const yVal = buildings[i][1];
+
+        if (
+            minXInCol.get(yVal) < xVal &&
+            maxXInCol.get(yVal) > xVal &&
+            minYInRow.get(xVal) < yVal &&
+            maxYInRow.get(xVal) > yVal
+        ) {
+            result ++;
+        }
+    }
+
+    return result;
+};

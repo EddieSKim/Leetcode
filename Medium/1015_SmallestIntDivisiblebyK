@@ -1,0 +1,19 @@
+function smallestRepunitDivByK(k: number): number {
+    if (k % 2 === 0 || k % 5 === 0) {
+        return -1;
+    }
+
+    let rem: number = 0;
+    let length: number = 0;
+    
+    while (true) {
+        rem = (rem * 10 + 1) % k
+        length ++;
+
+        if (rem === 0) {
+            return length;
+        }
+    }
+
+    return length;
+};

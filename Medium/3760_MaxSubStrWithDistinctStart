@@ -1,0 +1,14 @@
+function maxDistinct(s: string): number {
+    const arr: string[] = s.split("");
+    const charSet: Set<string> = new Set();
+    let count: number = 0;
+
+    for (let char of arr) {
+        if (!charSet.has(char)) {
+            count++;
+            charSet.add(char);
+        }
+    }
+
+    return count;
+};

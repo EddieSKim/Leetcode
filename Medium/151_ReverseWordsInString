@@ -1,0 +1,11 @@
+function reverseWords(s: string): string {
+    const stringArray = s.split(" ").reverse();
+    const result = [];
+    for (const word of stringArray) {
+        if (word !== "") {
+            result.push(word);
+        }
+    }
+
+    return result.join(" ");
+};

@@ -1,0 +1,37 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     val: number
+ *     next: ListNode | null
+ *     constructor(val?: number, next?: ListNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.next = (next===undefined ? null : next)
+ *     }
+ * }
+ */
+
+function insertGreatestCommonDivisors(head: ListNode | null): ListNode | null {
+    if (head.next === null) {
+        return head;
+    }
+
+    let currentNode = head;
+    let next = head.next;
+
+    while (currentNode.next) {
+        const gcd = findGCDRecursive(currentNode.val, currentNode.next.val);
+        const tempNode = currentNode.next;
+        const newNode = new ListNode(gcd, tempNode);
+        currentNode.next = newNode;
+        currentNode = tempNode;
+    }
+
+    return head;
+};
+
+function findGCDRecursive(a, b) {
+  if (b === 0) {
+    return a;
+  }
+  return findGCDRecursive(b, a % b);
+}

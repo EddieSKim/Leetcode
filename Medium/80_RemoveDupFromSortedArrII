@@ -1,0 +1,22 @@
+function removeDuplicates(nums: number[]): number {
+    const map = new Map();
+    const size = nums.length;
+    let index = 0;
+
+    for (let i = 0; i < size; i++) {
+        if (nums[index] != nums[i]) {
+            if (map.get(nums[i]) == undefined || map.get(nums[i]) < 2) {
+                nums[index] = nums[i];
+                index++;
+                map.set(nums[i], (map.get(nums[i]) || 0) + 1);
+            }
+            
+        } else if (map.get(nums[i]) == undefined || map.get(nums[i]) < 2) {
+            index++;
+            map.set(nums[i], (map.get(nums[i]) || 0) + 1);
+        } 
+    }
+    
+
+    return index;
+};

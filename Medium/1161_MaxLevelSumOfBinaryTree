@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     val: number
+ *     left: TreeNode | null
+ *     right: TreeNode | null
+ *     constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+ *         this.val = (val===undefined ? 0 : val)
+ *         this.left = (left===undefined ? null : left)
+ *         this.right = (right===undefined ? null : right)
+ *     }
+ * }
+ */
+
+function maxLevelSum(root: TreeNode | null): number {
+    const res = [];
+    levelOrderRec(root, 0, res);
+
+    let biggest = -Number.MAX_VALUE;
+    let level = 0;
+    for (let i = 0; i < res.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < res[i].length; j++) {
+            sum += res[i][j];
+        }
+
+        if (sum > biggest) {
+            biggest = sum;
+            level = i + 1;
+        }
+    }
+
+    return level;
+};
+
+function levelOrderRec(root, level, res): number[][] {
+    if (root === null) return;
+
+    if (res.length <= level)
+        res.push([]);
+
+    res[level].push(root.val);
+
+    levelOrderRec(root.left, level + 1, res);
+    levelOrderRec(root.right, level + 1, res);
+}

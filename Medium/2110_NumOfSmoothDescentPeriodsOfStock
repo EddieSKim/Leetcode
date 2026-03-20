@@ -1,0 +1,32 @@
+function getDescentPeriods(prices: number[]): number {
+    if (prices.length === 0) {
+        return 0;
+    }
+
+    let result: number = 0;
+    let length: number = 0;
+    let prev: number = 0;
+
+    for (let i = 0; i < prices.length; i++) {
+        if (i === 0) {
+            length++;
+            prev = prices[i];
+        } else {
+            if (prev - 1 !== prices[i]) {
+                result += calculate(length);
+                length = 1;
+            } else {
+                length++;
+            }
+            prev = prices[i];
+        }
+
+
+    }
+
+    return result + calculate(length);
+};
+
+function calculate(length: number): number {
+    return (length*(length+1))/2;
+}

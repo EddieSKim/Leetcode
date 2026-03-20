@@ -1,0 +1,49 @@
+// *** INCOMPLETE ***
+
+class FindSumPairs {
+    nums1: number[];
+    nums2: number[];
+    nums2Frequency: Map<number, number>;
+
+    constructor(nums1: number[], nums2: number[]) {
+        this.nums1 = nums1;
+        this.nums2 = nums2;
+        this.buildFrequencyMap();
+    }
+
+    buildFrequencyMap(): void {
+        const freqMap: Map<number, number> = new Map();
+        for (let num of this.nums2) {
+            freqMap.set(num, (freqMap.get(num) ? freqMap.get(num) : 0) +1);
+        }
+        this.nums2Frequency = freqMap;
+    }
+
+    add(index: number, val: number): void {
+        let temp: number = this.nums2[index];
+        this.nums2Frequency.set(temp, (this.nums2Frequency.get(temp)) -1);
+
+        this.nums2[index] += val;
+        temp = this.nums2[index];
+        this.nums2Frequency.set(temp, (this.nums2Frequency.get(temp) ?? 0) + 1);
+    }
+
+    count(tot: number): number {
+        let count = 0;
+        for (let num of this.nums1) {
+            // duplicates must be counted too;
+            // create map of number of occurances in nums2
+            if (this.nums2.includes(tot-num)) {
+                count+=this.nums2Frequency.get(tot-num);
+            }
+        }
+        return count;
+    }
+}
+
+/**
+ * Your FindSumPairs object will be instantiated and called as such:
+ * var obj = new FindSumPairs(nums1, nums2)
+ * obj.add(index,val)
+ * var param_2 = obj.count(tot)
+ */
