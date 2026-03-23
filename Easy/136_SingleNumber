@@ -1,0 +1,26 @@
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var singleNumber = function(nums) {
+    let arr = nums;
+    const len = nums.length;
+    const numMap = new Map();
+
+    for(let i = 0; i < len; i++){
+        // fill a key and value for each value - map
+        if(!numMap.has(arr[i])) {
+            numMap.set(arr[i], 1);
+        } else {
+            let value = numMap.get(arr[i]);
+            value++;
+            numMap.set(arr[i], value);
+        }
+    }
+    // loop through the array and find key with value of 1
+    for( let [key, value] of numMap) {
+        if(value === 1) {
+            return key;
+        }
+    }
+};
