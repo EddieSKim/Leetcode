@@ -1,0 +1,15 @@
+function containsDuplicate(nums: number[]): boolean {
+    if (nums.length <= 1) {
+        return false;
+    }
+
+    const sortedArr = nums.sort((a,b) => a - b);
+
+    for (let i = 1; i < sortedArr.length; i++) {
+        if (sortedArr[i] === sortedArr[i-1]) {
+            return true;
+        }
+    }
+
+    return false;
+};

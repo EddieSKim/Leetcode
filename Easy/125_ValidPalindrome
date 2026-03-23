@@ -1,0 +1,23 @@
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isPalindrome = function(s) {
+    const removed = s.replace(/[^0-9a-zA-Z]/gi, '').toLowerCase();
+    const str = removed.split('');
+
+    if(removed === "") {
+        return true;
+    }
+
+    let curr = 0;
+    const len = str.length;
+    while (curr < len/2) {
+        if (str[curr] !== str[len-1-curr]){
+            return false;
+        }
+        curr++;
+    }
+
+    return true;
+};
