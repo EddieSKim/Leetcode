@@ -1,0 +1,18 @@
+function canReach(arr: number[], start: number): boolean {
+    const visited: Set<number> = new Set();
+
+    return DFS(arr, start, visited);
+};
+
+function DFS (arr: number[], index: number, visited: Set<number>) {
+    if (visited.has(index)) return false;
+    if (index > arr.length || index < 0) return false;
+
+    visited.add(index);
+
+    if (arr[index] === 0) {
+        return true;
+    }
+    
+    return DFS(arr, index - arr[index], visited) || DFS(arr, index + arr[index], visited);
+}
