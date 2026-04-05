@@ -1,0 +1,41 @@
+function searchMatrix(matrix: number[][], target: number): boolean {
+    let colLength: number = matrix[0].length;
+    let rowLength: number = matrix.length;
+
+    let topRow: number = 0;
+    let botRow: number = rowLength - 1;
+    let currentRow: number = 0;
+
+    while (topRow <= botRow) {
+        currentRow = Math.floor((topRow + botRow) / 2);
+
+        if (target > matrix[currentRow][colLength - 1]) {
+            topRow = currentRow + 1;
+        } else if (target < matrix[currentRow][0]) {
+            botRow = currentRow - 1;
+        } else {
+            break;
+        }
+    }
+
+    if (topRow > botRow) {
+        return false;
+    }
+
+    let start: number = 0;
+    let end: number = colLength - 1;
+
+    while (start <= end) {
+        let cur: number = Math.floor((start + end) / 2);
+
+        if (target > matrix[currentRow][cur]) {
+            start = cur + 1;
+        } else if (target < matrix[currentRow][cur]) {
+            end = cur - 1;
+        } else {
+            return true;
+        }
+    }
+
+    return false;
+};
