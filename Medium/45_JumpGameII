@@ -1,0 +1,30 @@
+function jump(nums: number[]): number {
+    // number of minimum jumps
+    let res: number = 0;
+
+    // left boundary of window
+    let left: number = 0;
+
+    // right boundary of window
+    let right: number = 0;
+
+    while (right < nums.length - 1) {
+        // Furthest reachable index in the next available moves in the window {left, right}
+        let furthest = 0;
+
+        // iterate through the values in the window
+        for (let i = left; i <= right; i++) {
+            // find the furthest reachable index using the moves
+            furthest = Math.max(furthest, i + nums[i]);
+        }
+
+        // update the window to the next available moves
+        left = right + 1;
+        right = furthest;
+
+        // increment as we have made a jump
+        res ++;
+    }
+
+    return res;
+};
